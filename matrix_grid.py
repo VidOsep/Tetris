@@ -12,6 +12,6 @@ element_arr = [element1,element2,element3,element4]
 
 while True:
     tm.sleep(0.8)
-    element_arr = rnd.shuffle(element_arr)
+    rnd.shuffle(element_arr)
     for i in element_arr:
         print i
