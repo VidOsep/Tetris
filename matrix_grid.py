@@ -14,13 +14,14 @@ while True:
     tm.sleep(1)
     rnd.shuffle(element_arr)
     for i in element_arr:
-        if i == element1:
-            grid[0:2,0:3] = i
-        elif i == element2:
-            grid[0:2,0:3] = i
-        elif i == element3:
-            grid[0:2,0:4] = i
-        elif i == element4:
-            grid[0:3,0:3] = i
+        x = rnd.randint(0,4)
+        if (i==element4).all():
+            grid[x:x+2,0:2] = i
+        elif (i==element1).all():
+            grid[x:x+2,0:3] = i
+        elif (i==element2).all():
+            grid[x:x+2,0:3] = i
+        elif (i==element3).all():
+            grid[x:x+2,0:4] = i
         print grid
         tm.sleep(3)
