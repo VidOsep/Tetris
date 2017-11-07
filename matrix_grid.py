@@ -7,6 +7,7 @@ x = el.Element()
 
 grid = np.matrix([[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]])
 stable_arr = x.element_arr
+blank_line = [0,0,0,0,0,0,0]
 
 while True:
     tm.sleep(1)
@@ -14,6 +15,10 @@ while True:
     rnd.shuffle(ele_arr)
     for i in ele_arr:
         x = rnd.randint(0,4)
-        grid[0:4,x:x+2] = i
+        for y in range(10):
+            grid[y:y+4,x:x+2] = i
+            print grid
+            grid[y:y+1, 0:7] = blank_line
+            tm.sleep(0.7)
         print grid
-        tm.sleep(3)
+        tm.sleep(5)
