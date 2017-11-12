@@ -15,16 +15,21 @@ while True:
     rnd.shuffle(ele_arr)
     for i in ele_arr:
         x = rnd.randint(0,4)
-        for y in range(6):
-            if y < 5:
-                grid[y:y+4,x:x+2] = i
+        if i.shape == (2,2):
+            z = 2
+            j = 2
+            k = 8
+        elif i.shape == (3,2):
+            z = 3
+            j = 2
+            k = 7
+        elif i.shape == (4,1):
+            z = 4
+            j = 1
+            k = 6
+        for y in range(k):
+                grid[y:y+z,x:x+j] = i
                 print grid
-                grid[y:y + 1, 0:7] = blank_line
-                tm.sleep(0.7)
-            else:
-                grid[y:y+4,x:x+2] = i
-                print grid
-                if grid[y+2,x+1] == 1:
-                    grid[y+1:y+4,x:x+2] = grid[y:y+3,x:x+2]
+                grid[y:y+z-(z-1), 0:7] = blank_line
                 tm.sleep(0.7)
         tm.sleep(5)
