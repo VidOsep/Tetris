@@ -7,14 +7,22 @@ import pygame as pg
 from pygame.locals import *
 
 pg.init()
-
-DISPLAYSURF = pg.display.set_mode((400, 300))
-pg.display.set_caption("Tetris 1.0")
 x = el.Element()
 
-grid = np.matrix([[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]])
+background = pg.image.load('background.jpg')
+DISPLAYSURF = pg.display.set_mode((600, 405))
+pg.display.set_caption('Tetris 1.0')
+block = pg.image.load('block.png')
+block_rect = block.get_rect()
+
+grid = np.zeros((9,7))
 stable_arr = x.element_arr
 blank_line = [0,0,0,0,0,0,0]
+
+white = pg.Color(255,255,255)
+
+DISPLAYSURF.fill(white)
+pg.display.update()
 
 def rotate(element):
     return zip(element[::-1])
@@ -28,7 +36,6 @@ while True:
     right_pressed = False
     left_pressed = False
     space_pressed = False
-    pg.display.update()
     tm.sleep(1)
     ele_arr = stable_arr
     rnd.shuffle(ele_arr)
@@ -58,15 +65,24 @@ while True:
                         left_pressed = True
                     elif event.key == K_SPACE:
                         space_pressed = True
-            if right_pressed:
+            if blockright_pressed:
                 x = x + 1
             elif left_pressed:
                 x = x - 1
             elif space_pressed:
                 rotate(i)
             grid[y:y+z,x:x+j] = i
-            print grid
+            print(grid)
+            for line in grid:
+                for block in line:
+                    if block == 1.0:
+                        DISPLAYSURF.blit(block, block_rect)
+
+            #inverted_grid = 1 - grid
+            #plt.imsave('grid(%d).png' % k, inverted_grid, cmap=cm.gray)
+            #pg.surfarray.blit_array(DISPLAYSURF, grid)
             grid[y:y+z-(z-1), x:x+j] = blank_line[x:x+j]
+            pg.display.update()
             if check_if_touching(grid[y+z:y+z+1,x:x+j]):
                 break
             right_pressed = False
