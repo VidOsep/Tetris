@@ -4,12 +4,13 @@ import numpy as np
 import random as rnd
 import element as el
 import pygame as pg
+from drawSquares import drawMatrix
 
 pg.init()
 x = el.Element()
 
 #background = pg.image.load('background.jpg')
-DISPLAYSURF = pg.display.set_mode((600, 405))
+DISPLAYSURF = pg.display.set_mode((306, 393))
 pg.display.set_caption('Tetris 1.0')
 #block = pg.image.load('block.png')
 #block_rect = block.get_rect()
@@ -55,19 +56,15 @@ while True:
                 if event.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
-                elif event.type == pg.KEYDOWN:
-                    if event.key == pg.K_RIGHT:
-                        right_pressed = True
-                    elif event.key == pg.K_LEFT:
-                        left_pressed = True
-                    elif event.key == pg.K_SPACE:
-                        space_pressed = True
+                #elif event.type == pg.KEYDOWN:
+                    #if event.key == pg.K_RIGHT:
+                        #right_pressed = True
+                    #elif event.key == pg.K_LEFT:
+                        #left_pressed = True
+                    #elif event.key == pg.K_SPACE:
+                        #space_pressed = True
             grid[y:y+z,x:x+j] = i
-            print(grid)
-            #for line in grid:
-                #for block in line:
-                    #if block == 1.0:
-                        #DISPLAYSURF.blit(block, block_rect)
+            drawMatrix(grid,DISPLAYSURF)
             grid[y:y+z-(z-1), x:x+j] = blank_line[x:x+j]
             print(grid)
             pg.display.update()
