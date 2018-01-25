@@ -17,9 +17,9 @@ def drawMatrix(matrix,display):
         for i in range(7):
 
             if matrix[y][i] == 1:
-                pg.draw.rect(display, white, (x_pos, y_pos, width, height))
-            else:
                 pg.draw.rect(display, red, (x_pos, y_pos, width, height))
+            else:
+                pg.draw.rect(display, white, (x_pos, y_pos, width, height))
 
             x_pos += width + margin
         y_pos += height + margin
