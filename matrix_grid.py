@@ -9,11 +9,9 @@ from drawSquares import drawMatrix
 pg.init()
 x = el.Element()
 
-#background = pg.image.load('background.jpg')
+
 DISPLAYSURF = pg.display.set_mode((306, 393))
 pg.display.set_caption('Tetris 1.0')
-#block = pg.image.load('block.png')
-#block_rect = block.get_rect()
 
 grid = np.zeros((9,7))
 stable_arr = x.element_arr
@@ -28,9 +26,20 @@ pg.display.update()
 #    return zip(element[::-1])
 
 
-def check_if_touching(ting):
-    if ting.any():
-       return True
+def check_if_touching(ting,bottom):
+    try:
+        if bottom == [1,1]:
+            if ting.any():
+                return True
+        else:
+            if bottom[0] == 1 and ting[0] == 1:
+                return True
+            elif bottom[1] == 1 and ting[1] == 1:
+                return True
+    except ValueError:
+        if ting.any():
+            return True
+
 
 while True:
     tm.sleep(1)
@@ -56,18 +65,18 @@ while True:
                 if event.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
-                #elif event.type == pg.KEYDOWN:
-                    #if event.key == pg.K_RIGHT:
-                        #right_pressed = True
-                    #elif event.key == pg.K_LEFT:
-                        #left_pressed = True
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RIGHT:
+                        grid[y:y+z,x:x+j+1] = np.zeros((i.shape[0],i.shape[1]+1))
+                        x += 1
+                    elif event.key == pg.K_LEFT:
+                        x -= 1
                     #elif event.key == pg.K_SPACE:
                         #space_pressed = True
             grid[y:y+z,x:x+j] = i
+            grid[y-1:y, x:x+j] = blank_line[x:x+j]
             drawMatrix(grid,DISPLAYSURF)
-            grid[y:y+z-(z-1), x:x+j] = blank_line[x:x+j]
-            print(grid)
             pg.display.update()
-            if check_if_touching(grid[y+z:y+z+1,x:x+j]):
+            if check_if_touching(grid[y+z:y+z+1,x:x+j],grid[y+z-1:y+z,x:x+j]):
                 break
         tm.sleep(5)
