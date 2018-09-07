@@ -5,11 +5,11 @@ def drawMatrix(matrix,display):
     white = (255, 255, 255)
     red = (200,50,50)
 
-    x_pos = 5
-    y_pos = 5
-    margin = 5
-    width = 38
-    height = 38
+    x_pos = 0
+    y_pos = 0
+    margin = 0
+    width = 20
+    height = 20
 
 
     for y in range(9):
