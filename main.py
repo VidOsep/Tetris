@@ -18,33 +18,21 @@ white = pg.Color(255, 255, 255)
 DISPLAYSURF.fill(white)
 pg.display.update()
 
-elements = element.Element()
+el = element.Element(3)
+el.chooseRandom()
 
+print(el.isTouching(grid))
 while True:
-    tm.sleep(1)
-    elements.chooseRandom()
-    element = elements.element
-    elementX = rnd.randint(0, 7)
-    x = element.shape[1]
-    y = element.shape[0]
-    for i in range(20):
-        tm.sleep(0.5)
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
-                sys.exit()
-            elif event.type == pg.KEYDOWN:
-                if event.key == pg.K_RIGHT:
-                    elements.drawToGrid(grid,i,elementX+1,element)
-                    elementX += 1
-                elif event.key == pg.K_LEFT:
-                    elements.drawToGrid(grid,i,elementX-1,element)
-                    elementX -= 1
-        elements.drawToGrid(grid,elementX,i,element)
-        grid[i - 1:i, elementX:elementX + x] \
-            = np.zeros((1,x))
-        drawMatrix(grid, DISPLAYSURF)
-        pg.display.update()
-        if elements.isTouching(grid[i + y:i + y + 1, elementX:elementX + x],
-                             grid[i + y - 1:i + y, elementX:elementX + x]):
-            break
+
+    
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            sys.exit()
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_RIGHT:
+                el.moveRight()
+            elif event.key == pg.K_LEFT:
+                el.moveLeft()
+    drawMatrix(grid, DISPLAYSURF)
+    pg.display.update()
