@@ -13,15 +13,21 @@ pg.display.set_caption('Tetris 1.0')
 
 grid = np.zeros((20, 10))
 
-white = pg.Color(255, 255, 255)
+WHITE = pg.Color(255, 255, 255)
 
-DISPLAYSURF.fill(white)
+DISPLAYSURF.fill(WHITE)
 pg.display.update()
 
+# za debuggiranje
 el = element.Element(3)
 el.chooseRandom()
 
 print(el.isTouching(grid))
+
+PREMIKDOL,t = pg.USEREVENT+1,1000
+pygame.time.set_timer(MOVEEVENT, t)
+
+
 while True:
 
     
@@ -31,8 +37,20 @@ while True:
             sys.exit()
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_RIGHT:
+                # premik desno
                 el.moveRight()
             elif event.key == pg.K_LEFT:
+                # premik levo
                 el.moveLeft()
+            elif event.key == pg.K_UP:
+                # zarotiraj trenutni tetronim
+                pass
+                el.rotateRight()
+
+        # lokalno definiran event
+        if event.type==PREMIKDOL:
+            el.moveDown()
+
+    # izris matrike
     drawMatrix(grid, DISPLAYSURF)
     pg.display.update()

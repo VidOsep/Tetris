@@ -3,22 +3,23 @@ import random
 
 class Element:
     def __init__(self,x):
-        element1 = [["0","1"], ["0", "1"], ["1", "1"], ["0","0"]]
-        element2 = [["1","0"], ["1","0"], ["1","0"], ["1","0"]]
-        element3 = [["1", "1"], ["1", "1"],["0","0"],["0","0"]]
-        element4 = [["0", "1"], ["1", "1"], ["0", "1"],["0","0"]]
-        self.element_arr = [element1, element2, element3, element4]
-        self.element = random.choice(self.element_arr)
-                
+        self.chooseRandom()
+
         self.x=x
         self.y=0
 
     def chooseRandom(self):
-        self.element = random.choice(self.element_arr)
+        e1 = np.array([[0,1,0,0],[0,1,0,0],[1,1,0,0],[0,0,0,0]])
+        e2 = np.array([[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]])
+        e3 = np.array([[1,1,0,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]])
+        e4 = np.array([[0,1,0,0],[1,1,0,0],[0,1,0,0],[0,0,0,0]])
+
+        element_arr = [e1, e2, e3, e4]
+        self.element = random.choice(element_arr)
         
     def getLastRow(self):
         for i in range(4):
-            if int("".join(self.element[i]),2) & 3 == 0:
+            if  == 0:
                 return i
         return 3
 
@@ -43,8 +44,10 @@ class Element:
     def moveLeft(self):
         self.x-=1
 
-    def drawToGrid(self,grid,topX,topY,element):
-        x = element.shape[1]
-        y = element.shape[0]
+    def rotateRight(self):
+        np.rot90(self.element)
+
+    def draw(self, grid, topX, topY, element):
+
         grid[topY:topY+y,topX:topX+x] = element
 
