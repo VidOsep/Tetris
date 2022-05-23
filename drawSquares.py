@@ -12,11 +12,10 @@ def drawMatrix(matrix,display):
     height = 20
 
 
-    for y in range(9):
+    for i in range(20):
+        for j in range(10):
 
-        for i in range(7):
-
-            if matrix[y][i] == 1:
+            if matrix[i][j] == 1:
                 pg.draw.rect(display, red, (x_pos, y_pos, width, height))
             else:
                 pg.draw.rect(display, white, (x_pos, y_pos, width, height))

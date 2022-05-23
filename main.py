@@ -11,7 +11,7 @@ pg.init()
 DISPLAYSURF = pg.display.set_mode((200, 400))
 pg.display.set_caption('Tetris 1.0')
 
-grid = np.zeros((20, 10))
+grid = np.zeros((20, 10), dtype=int)
 
 WHITE = pg.Color(255, 255, 255)
 
@@ -22,11 +22,16 @@ pg.display.update()
 el = element.Element(3)
 el.chooseRandom()
 
-print(el.isTouching(grid))
+print(el.getLastRow())
+print(el.getLastCol())
+print(el.element)
+el.rotateRight()
+print(el.getLastRow())
+print(el.getLastCol())
+print(el.element)
 
 PREMIKDOL,t = pg.USEREVENT+1,1000
-pygame.time.set_timer(MOVEEVENT, t)
-
+pg.time.set_timer(PREMIKDOL, t)
 
 while True:
 
@@ -48,9 +53,12 @@ while True:
                 el.rotateRight()
 
         # lokalno definiran event
-        if event.type==PREMIKDOL:
+        if event.type == PREMIKDOL:
             el.moveDown()
 
     # izris matrike
+    prejsnja = grid
+    grid = el.draw(grid)
     drawMatrix(grid, DISPLAYSURF)
+    grid = prejsnja
     pg.display.update()
