@@ -20,17 +20,8 @@ pg.display.update()
 
 # za debuggiranje
 el = element.Element(3)
-el.chooseRandom()
 
-print(el.getLastRow())
-print(el.getLastCol())
-print(el.element)
-el.rotateRight()
-print(el.getLastRow())
-print(el.getLastCol())
-print(el.element)
-
-PREMIKDOL,t = pg.USEREVENT+1,1000
+PREMIKDOL,t = pg.USEREVENT+1,750
 pg.time.set_timer(PREMIKDOL, t)
 
 while True:
@@ -43,19 +34,28 @@ while True:
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_RIGHT:
                 # premik desno
-                el.moveRight()
+                el.moveRight(grid)
             elif event.key == pg.K_LEFT:
                 # premik levo
-                el.moveLeft()
+                el.moveLeft(grid)
             elif event.key == pg.K_UP:
                 # zarotiraj trenutni tetronim
-                pass
                 el.rotateRight()
-
+            elif event.key == pg.K_DOWN:
+                # zarotiraj trenutni tetronim
+                if t==750:
+                    t=200
+                else:
+                    t=750
+                pg.time.set_timer(PREMIKDOL, t)
         # lokalno definiran event
         if event.type == PREMIKDOL:
-            el.moveDown()
-
+            prejsnja = grid
+            grid = el.draw(grid)
+            if not(el.moveDown(prejsnja)):    
+                el = element.Element(3)
+            else:
+                grid = prejsnja
     # izris matrike
     prejsnja = grid
     grid = el.draw(grid)

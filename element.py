@@ -40,11 +40,14 @@ class Element:
         new = np.zeros((20,10),dtype=int)
         ix = self.getLastRow()
         iy = self.getLastCol()
-        new[x:y+iy,x:x+ix] = self.element[0:iy,0:ix]
-
+        try:
+            new[y:y+iy,x:x+ix] = self.element[0:iy,0:ix]
+        except:
+            return True
         overlap = np.bitwise_and(new,grid)
         if np.sum(overlap) > 0:
             return True
+        return False
 
     def isTouching(self, grid):
         try:
@@ -58,14 +61,26 @@ class Element:
             # return True
         return False
 
-    def moveDown(self):
-        self.y += 1
+    def moveDown(self,grid):
+        if self.y+self.getLastRow()>19 or self.isColliding(self.x,self.y+1,grid):
+            return False
+        else:
+            self.y += 1
+            return True
 
-    def moveRight(self):
-        self.x += 1
+    def moveRight(self,grid):
+        if self.x+self.getLastCol()>=18 or self.isColliding(self.x+1,self.y,grid):
+            return False
+        else:
+            self.x += 1
+            return True
 
-    def moveLeft(self):
-        self.x -= 1
+    def moveLeft(self,grid):
+        if self.x<1 or self.isColliding(self.x-1,self.y,grid):
+            return False
+        else:
+            self.x -= 1
+            return True
 
     def rotateRight(self):
         # rotacija za 90 stopinj
