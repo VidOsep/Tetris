@@ -12,6 +12,7 @@ DISPLAYSURF = pg.display.set_mode((200, 400))
 pg.display.set_caption('Tetris 1.0')
 
 grid = np.zeros((20, 10), dtype=int)
+colors = np.empty((20,10),dtype=object)
 
 WHITE = pg.Color(255, 255, 255)
 
@@ -25,8 +26,6 @@ PREMIKDOL,t = pg.USEREVENT+1,750
 pg.time.set_timer(PREMIKDOL, t)
 
 while True:
-
-    
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
@@ -51,14 +50,19 @@ while True:
         # lokalno definiran event
         if event.type == PREMIKDOL:
             prejsnja = grid
-            grid = el.draw(grid)
+            prejsnjac = colors
+            grid,colors = el.draw(grid,colors)
             if not(el.moveDown(prejsnja)):    
                 el = element.Element(3)
             else:
                 grid = prejsnja
+                colors = prejsnjac
+
     # izris matrike
     prejsnja = grid
-    grid = el.draw(grid)
-    drawMatrix(grid, DISPLAYSURF)
+    prejsnjac = colors
+    grid,colors = el.draw(grid,colors)
+    drawMatrix(grid,colors, DISPLAYSURF)
     grid = prejsnja
+    colors = prejsnjac
     pg.display.update()

@@ -15,8 +15,10 @@ class Element:
         e3 = np.array([[1, 1, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], dtype=int)
         e4 = np.array([[0, 1, 0, 0], [1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]], dtype=int)
 
+        colors = ["LIGHT_GREEN","LIGHT_BLUE","LIGHT_RED","YELLOW","PURPLE"]
         element_arr = [e1, e2, e3, e4]
         self.element = random.choice(element_arr)
+        self.color = random.choice(colors)
 
     def getLastRow(self):
         a,b=0,0
@@ -37,9 +39,10 @@ class Element:
         return a+b
 
     def isColliding(self,x,y,grid):
+        # preveri ce se tetronim na poziciji prekriva z igralno povrsino
         new = np.zeros((20,10),dtype=int)
-        ix = self.getLastRow()
-        iy = self.getLastCol()
+        iy = self.getLastRow()
+        ix = self.getLastCol()
         try:
             new[y:y+iy,x:x+ix] = self.element[0:iy,0:ix]
         except:
@@ -47,18 +50,6 @@ class Element:
         overlap = np.bitwise_and(new,grid)
         if np.sum(overlap) > 0:
             return True
-        return False
-
-    def isTouching(self, grid):
-        try:
-            ix = self.getLastRow()
-            bottom = self.element[ix]
-            grid_bottom = grid[self.y + ix + 1][self.x:self.x + 2]
-            if int("".join(self.element[ix]), 2) & int("".join(grid_bottom), 2):
-                return True
-        except ValueError:
-            pass
-            # return True
         return False
 
     def moveDown(self,grid):
@@ -86,10 +77,19 @@ class Element:
         # rotacija za 90 stopinj
         self.element = np.rot90(self.element)
 
-    def draw(self, grid):
+    def drawColors(self,new,colors):
+        for i in range(len(new)):
+            for j in range(len(new[0])):
+                if new[i][j]:
+                    colors[i][j] = self.color
+        return colors
+
+    def draw(self, grid, colors):
         new = np.zeros((20,10),dtype=int)
         iy = self.getLastRow()
         ix = self.getLastCol()
         new[self.y:self.y+iy,self.x:self.x+ix] = self.element[0:iy,0:ix]
 
-        return np.bitwise_or(new,grid)
+        colors = self.drawColors(new,colors)
+
+        return np.bitwise_or(new,grid),colors
