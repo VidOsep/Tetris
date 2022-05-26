@@ -14,15 +14,19 @@ class Element:
         e2 = np.array([[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]], dtype=int)
         e3 = np.array([[1, 1, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], dtype=int)
         e4 = np.array([[0, 1, 0, 0], [1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]], dtype=int)
+        e5 = np.array([[0,1,0,0], [0,0,0,1], [1,0,0,0], [0,0,1,0]], dtype=int)
+        e6 = np.array([[0,1,0,0], [0,1,0,0], [1,1,1,0], [0,1,0,0]], dtype=int)
+        e7 = np.array([[1,1,1,0,1], [0,0,1,0,1], [1,1,1,1,1], [1,0,1,0,0],[1,0,1,1,1]], dtype=int)
+
 
         colors = ["LIGHT_GREEN","LIGHT_BLUE","LIGHT_RED","YELLOW","PURPLE"]
-        element_arr = [e1, e2, e3, e4]
+        element_arr = [e1,e2,e3,e4,e5,e6,e7]
         self.element = random.choice(element_arr)
         self.color = random.choice(colors)
 
     def getLastRow(self):
         a,b=0,0
-        for i in range(4):
+        for i in range(len(self.element[0])):
             if np.sum(self.element[i]) != 0:
                 if a==0:
                     b=i
@@ -31,7 +35,7 @@ class Element:
 
     def getLastCol(self):
         a,b=0,0
-        for i in range(4):
+        for i in range(len(self.element)):
             if np.sum(self.element[:,i]) != 0:
                 if a==0:
                     b=i

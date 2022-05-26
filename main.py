@@ -8,19 +8,45 @@ from drawSquares import drawMatrix
 
 pg.init()
 
-DISPLAYSURF = pg.display.set_mode((200, 400))
+DISPLAYSURF = pg.display.set_mode((400, 400))
 pg.display.set_caption('Tetris 1.0')
+
+pg.mixer.init()
+pg.mixer.music.load("ginandjuice.mp3")
+pg.mixer.music.set_volume(0.7)
+pg.mixer.music.play()
 
 grid = np.zeros((20, 10), dtype=int)
 colors = np.empty((20,10),dtype=object)
 
-WHITE = pg.Color(255, 255, 255)
+BG = pg.Color(0, 64, 128)
 
-DISPLAYSURF.fill(WHITE)
+
+DISPLAYSURF.fill(BG)
 pg.display.update()
 
 # za debuggiranje
 el = element.Element(3)
+
+score = 0
+
+#initialize font
+pg.font.init()
+bigf = pg.font.SysFont('Comic Sans MS', 40)
+smallf = pg.font.SysFont('Comic Sans MS', 20)
+
+
+def title(x, y):
+    naslov = bigf.render('TETRIS', True, (255, 255, 255))
+    subnaslov = smallf.render('MADE BY VID', True, (255, 255, 255))
+    
+    naslov_rect = naslov.get_rect(center=(200/2, 50))
+    subnaslov_rect = subnaslov.get_rect(center=(200/2, 100))
+
+
+    DISPLAYSURF.blit(naslov, naslov_rect)
+    DISPLAYSURF.blit(subnaslov, subnaslov_rect)
+
 
 PREMIKDOL,t = pg.USEREVENT+1,750
 pg.time.set_timer(PREMIKDOL, t)
@@ -65,4 +91,7 @@ while True:
     drawMatrix(grid,colors, DISPLAYSURF)
     grid = prejsnja
     colors = prejsnjac
+    
+    title(0,0)
+    
     pg.display.update()

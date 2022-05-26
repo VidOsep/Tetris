@@ -8,10 +8,13 @@ def drawMatrix(matrix,colors,display):
     YELLOW = (255,255,0)
     PURPLE = (128,0,128)
 
+    PLAYAREABG = pg.Color(10, 10, 10)
+    
     white = (255, 255, 255)
     red = (200,50,50)
 
-    x_pos = 0
+    start_pos=200
+    x_pos = start_pos
     y_pos = 0
     margin = 0
     width = 20
@@ -35,8 +38,8 @@ def drawMatrix(matrix,colors,display):
                 else:
                     pg.draw.rect(display, red, (x_pos, y_pos, width, height))
             else:
-                pg.draw.rect(display, white, (x_pos, y_pos, width, height))
+                pg.draw.rect(display, PLAYAREABG, (x_pos, y_pos, width, height))
 
             x_pos += width + margin
         y_pos += height + margin
-        x_pos = 0
+        x_pos = start_pos
