@@ -66,6 +66,9 @@ while True:
             elif event.key == pg.K_UP:
                 # zarotiraj trenutni tetronim
                 el.rotateRight()
+            elif event.key == pg.K_a:
+                # zarotiraj trenutni tetronim
+                el.shiftElArrayLeft()
             elif event.key == pg.K_DOWN:
                 # zarotiraj trenutni tetronim
                 if t==750:

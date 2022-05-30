@@ -16,7 +16,7 @@ class Element:
         e4 = np.array([[0, 1, 0, 0], [1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]], dtype=int)
         e5 = np.array([[0,1,0,0], [0,0,0,1], [1,0,0,0], [0,0,1,0]], dtype=int)
         e6 = np.array([[0,1,0,0], [0,1,0,0], [1,1,1,0], [0,1,0,0]], dtype=int)
-        e7 = np.array([[1,1,1,0,1], [0,0,1,0,1], [1,1,1,1,1], [1,0,1,0,0],[1,0,1,1,1]], dtype=int)
+        #e7 = np.array([[1,1,1,0,1], [0,0,1,0,1], [1,1,1,1,1], [1,0,1,0,0],[1,0,1,1,1]], dtype=int)
 
 
         colors = ["LIGHT_GREEN","LIGHT_BLUE","LIGHT_RED","YELLOW","PURPLE"]
@@ -56,6 +56,15 @@ class Element:
             return True
         return False
 
+    def shiftElArrayLeft(self):
+        self.element = self.element[:,1:]
+        new_column = np.zeros((len(self.element),1))
+        self.element = np.append(self.element, new_column, axis=1)
+
+    def moveToLeftUp(self):
+        while np.sum(self.element[:,0]) == 0:
+            self.shiftElArrayLeft()
+
     def moveDown(self,grid):
         if self.y+self.getLastRow()>19 or self.isColliding(self.x,self.y+1,grid):
             return False
@@ -80,6 +89,7 @@ class Element:
     def rotateRight(self):
         # rotacija za 90 stopinj
         self.element = np.rot90(self.element)
+        self.moveToLeftUp()
 
     def drawColors(self,new,colors):
         for i in range(len(new)):
