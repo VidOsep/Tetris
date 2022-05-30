@@ -1,20 +1,12 @@
 import sys
 import numpy as np
-import element
 import pygame as pg
-from drawSquares import drawMatrix
+from element import Element
 
 pg.init()
 
 DISPLAYSURF = pg.display.set_mode((400, 400))
-pg.display.set_caption('Tetris 1.0')
-
-"""
-pg.mixer.init()
-pg.mixer.music.load("ginandjuice.mp3")
-pg.mixer.music.set_volume(0.7)
-pg.mixer.music.play()
-"""
+pg.display.set_caption('Tetris')
 
 grid = np.zeros((20, 10), dtype=int)
 colors = np.empty((20,10),dtype=object)
@@ -22,7 +14,7 @@ colors = np.empty((20,10),dtype=object)
 BG = pg.Color(0, 64, 128)
 
 # za debuggiranje
-el = element.Element(3)
+el = Element(3)
 
 score = 0
 
@@ -31,6 +23,48 @@ pg.font.init()
 bigf = pg.font.SysFont('Comic Sans MS', 40)
 smallf = pg.font.SysFont('Comic Sans MS', 20)
 
+
+def drawMatrix(matrix, colors, display):
+    LIGHT_GREEN = (124, 252, 0)
+    LIGHT_BLUE = (32, 178, 170)
+    LIGHT_RED = (255, 0, 0)
+    YELLOW = (255, 255, 0)
+    PURPLE = (128, 0, 128)
+
+    PLAYAREABG = pg.Color(10, 10, 10)
+
+    white = (255, 255, 255)
+    red = (200, 50, 50)
+
+    start_pos = 200
+    x_pos = start_pos
+    y_pos = 0
+    margin = 0
+    width = 20
+    height = 20
+
+    for i in range(20):
+        for j in range(10):
+
+            if matrix[i][j] == 1:
+                if colors[i][j] == "LIGHT_GREEN":
+                    pg.draw.rect(display, LIGHT_GREEN, (x_pos, y_pos, width, height))
+                elif colors[i][j] == "LIGHT_BLUE":
+                    pg.draw.rect(display, LIGHT_BLUE, (x_pos, y_pos, width, height))
+                elif colors[i][j] == "LIGHT_RED":
+                    pg.draw.rect(display, LIGHT_RED, (x_pos, y_pos, width, height))
+                elif colors[i][j] == "YELLOW":
+                    pg.draw.rect(display, YELLOW, (x_pos, y_pos, width, height))
+                elif colors[i][j] == "PURPLE":
+                    pg.draw.rect(display, PURPLE, (x_pos, y_pos, width, height))
+                else:
+                    pg.draw.rect(display, red, (x_pos, y_pos, width, height))
+            else:
+                pg.draw.rect(display, PLAYAREABG, (x_pos, y_pos, width, height))
+
+            x_pos += width + margin
+        y_pos += height + margin
+        x_pos = start_pos
 
 def title(x, y):
     title_ = bigf.render('TETRIS', True, (255, 255, 255))
@@ -95,7 +129,7 @@ while True:
 
                 checkForLines()
 
-                el = element.Element(3)
+                el = Element(3)
                 if el.isColliding(el.x,el.y,grid):
                     pg.quit()
                     sys.exit()
