@@ -16,7 +16,7 @@ class Element:
         e4 = np.array([[0, 1, 0, 0], [1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]], dtype=int)
         e5 = np.array([[0,1,0,0], [0,0,0,1], [1,0,0,0], [0,0,1,0]], dtype=int)
         e6 = np.array([[0,1,0,0], [0,1,0,0], [1,1,1,0], [0,1,0,0]], dtype=int)
-        #e7 = np.array([[1,1,1,0,1], [0,0,1,0,1], [1,1,1,1,1], [1,0,1,0,0],[1,0,1,1,1]], dtype=int)
+        e7 = np.array([[1,1,1,0,1], [0,0,1,0,1], [1,1,1,1,1], [1,0,1,0,0],[1,0,1,1,1]], dtype=int)
 
 
         colors = ["LIGHT_GREEN","LIGHT_BLUE","LIGHT_RED","YELLOW","PURPLE"]
@@ -57,15 +57,18 @@ class Element:
         return False
 
     def shiftElArrayLeft(self):
+        # zamakne obliko tetronima v levo
         self.element = self.element[:,1:]
         new_column = np.zeros((len(self.element),1))
         self.element = np.append(self.element, new_column, axis=1)
 
     def moveToLeftUp(self):
+        # prestavi tetronim v zgornji levi kot matrike
         while np.sum(self.element[:,0]) == 0:
             self.shiftElArrayLeft()
 
     def moveDown(self,grid):
+        # premakne tetronimo navzdol
         if self.y+self.getLastRow()>19 or self.isColliding(self.x,self.y+1,grid):
             return False
         else:
@@ -73,6 +76,7 @@ class Element:
             return True
 
     def moveRight(self,grid):
+        # premakne tetronimo v desno
         if self.x+self.getLastCol()>=18 or self.isColliding(self.x+1,self.y,grid):
             return False
         else:
@@ -80,17 +84,26 @@ class Element:
             return True
 
     def moveLeft(self,grid):
+        # premakne tetronimo v levo
         if self.x<1 or self.isColliding(self.x-1,self.y,grid):
             return False
         else:
             self.x -= 1
             return True
 
-    def rotateRight(self):
+    def rotateRight(self,grid):
         # rotacija za 90 stopinj
+        old = self.element
         self.element = np.rot90(self.element)
         self.moveToLeftUp()
-
+        try:
+            if not self.isColliding(self.x,self.y,grid):
+                return True
+            else:
+                self.element = old
+                return False
+        except:
+            return False
     def drawColors(self,new,colors):
         for i in range(len(new)):
             for j in range(len(new[0])):
