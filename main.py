@@ -100,7 +100,7 @@ def checkForLines():
             colors = np.concatenate((np.empty((1, 10), dtype=object), colors))
 
 
-MOVEDOWN, t = pg.USEREVENT + 1, 750
+MOVEDOWN, t = pg.USEREVENT + 1, 500
 pg.time.set_timer(MOVEDOWN, t)
 
 while True:
@@ -121,10 +121,10 @@ while True:
                 el.rotateRight(grid)
             elif event.key == pg.K_DOWN:
                 # toggle hitrejsi padec
-                if t == 750:
-                    t = 100
+                if t == 500:
+                    t = 150
                 else:
-                    t = 750
+                    t = 500
                 pg.time.set_timer(MOVEDOWN, t)
         # lokalno definiran event - premik dol
         if event.type == MOVEDOWN:
