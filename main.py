@@ -9,6 +9,20 @@ pg.init()
 DISPLAYSURF = pg.display.set_mode((400, 400))
 pg.display.set_caption('Tetris')
 
+ARROW_SIZE = (50,50)
+
+arrow_d = pg.image.load("arrow.png")
+arrow_d = pg.transform.scale(arrow_d, ARROW_SIZE)
+
+arrow_l = pg.transform.rotate(arrow_d, 90)
+arrow_l = pg.transform.scale(arrow_l, ARROW_SIZE)
+
+arrow_u = pg.transform.rotate(arrow_d, 180)
+arrow_u = pg.transform.scale(arrow_u, ARROW_SIZE)
+
+arrow_r = pg.transform.rotate(arrow_d, 270)
+arrow_r = pg.transform.scale(arrow_r, ARROW_SIZE)
+
 # igralna povrsina sestavljena iz binarne matrike - grid in matrike nizov - colors (oblika in barve)
 grid = np.zeros((20, 10), dtype=int)
 colors = np.empty((20, 10), dtype=object)
@@ -82,9 +96,25 @@ def title(x=0, y=0):
 def scoreBlit(score):
     # izrise tocke na zaslon
     score_ = smallf.render("Tocke: " + str(score), True, (255, 255, 255))
-    score_rect = score_.get_rect(center=(200 / 2, 300))
+    score_rect = score_.get_rect(center=(200 / 2, 370))
 
     DISPLAYSURF.blit(score_, score_rect)
+    
+def instructionsBlit():
+    # izrise navodila za premikanje
+    shift_y = 50
+    au_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*1))
+    DISPLAYSURF.blit(arrow_u, au_rect)
+    
+    ad_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*2))
+    DISPLAYSURF.blit(arrow_d, ad_rect)
+    
+    al_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*3))
+    DISPLAYSURF.blit(arrow_l, al_rect)
+    
+    ar_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*4))
+    DISPLAYSURF.blit(arrow_r, ar_rect)
+
 
 
 def checkForLines():
@@ -152,6 +182,7 @@ while True:
     DISPLAYSURF.fill(BG)
     title()
     scoreBlit(score)
+    instructionsBlit()
 
     # izris matrike grid na zaslon
     drawMatrix(grid, colors, DISPLAYSURF)
