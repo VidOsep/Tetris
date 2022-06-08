@@ -35,8 +35,9 @@ score = 0
 
 # fonti
 pg.font.init()
-bigf = pg.font.SysFont('Comic Sans MS', 40)
-smallf = pg.font.SysFont('Comic Sans MS', 20)
+bigf = pg.font.SysFont('georgia', 40)
+smallf = pg.font.SysFont('georgia', 20)
+navodilaf = pg.font.SysFont('georgia', 11)
 
 
 def drawMatrix(matrix, colors, display):
@@ -102,18 +103,38 @@ def scoreBlit(score):
     
 def instructionsBlit():
     # izrise navodila za premikanje
-    shift_y = 50
+    shift_y = 55
     au_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*1))
+    pg.draw.rect(DISPLAYSURF, (255,255,255), au_rect.inflate(3,3))
     DISPLAYSURF.blit(arrow_u, au_rect)
     
     ad_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*2))
+    pg.draw.rect(DISPLAYSURF, (255,255,255), ad_rect.inflate(3,3))
     DISPLAYSURF.blit(arrow_d, ad_rect)
     
     al_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*3))
+    pg.draw.rect(DISPLAYSURF, (255,255,255), al_rect.inflate(3,3))
     DISPLAYSURF.blit(arrow_l, al_rect)
     
     ar_rect = arrow_d.get_rect(center=(200 / 2 - 40, 100+shift_y*4))
+    pg.draw.rect(DISPLAYSURF, (255,255,255), ar_rect.inflate(3,3))
     DISPLAYSURF.blit(arrow_r, ar_rect)
+
+    au_text = navodilaf.render('OBRAT', True, (255, 255, 255))
+    au_rect = au_text.get_rect(center=(200 / 2+40, 100+shift_y*1))
+    DISPLAYSURF.blit(au_text, au_rect)
+
+    ad_text = navodilaf.render('POSPEŠI PADANJE', True, (255, 255, 255))
+    ad_rect = ad_text.get_rect(center=(200 / 2+40, 100+shift_y*2))
+    DISPLAYSURF.blit(ad_text, ad_rect)
+
+    al_text = navodilaf.render('PREMIK LEVO', True, (255, 255, 255))
+    al_rect = al_text.get_rect(center=(200 / 2+40, 100+shift_y*3))
+    DISPLAYSURF.blit(al_text, al_rect)
+
+    ar_text = navodilaf.render('PREMIK DESNO', True, (255, 255, 255))
+    ar_rect = ar_text.get_rect(center=(200 / 2+40, 100+shift_y*4))
+    DISPLAYSURF.blit(ar_text, ar_rect)
 
 
 
