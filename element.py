@@ -19,10 +19,9 @@ class Element:
         e2 = np.array([[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]], dtype=int)
         e3 = np.array([[1, 1, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], dtype=int)
         e4 = np.array([[0, 1, 0, 0], [1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]], dtype=int)
-        e5 = np.array([[0, 1, 0, 0], [0, 1, 0, 0], [1, 1, 1, 0], [0, 1, 0, 0]], dtype=int)
 
         colors = ["LIGHT_GREEN", "LIGHT_BLUE", "LIGHT_RED", "YELLOW", "PURPLE"]
-        element_arr = [e1, e2, e3, e4, e5]
+        element_arr = [e1, e2, e3, e4]
         self.element = random.choice(element_arr)
         self.color = random.choice(colors)
 

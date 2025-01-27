@@ -96,7 +96,7 @@ def title(x=0, y=0):
 
 def scoreBlit(score):
     # izrise tocke na zaslon
-    score_ = smallf.render("Tocke: " + str(score), True, (255, 255, 255))
+    score_ = smallf.render("Points: " + str(score), True, (255, 255, 255))
     score_rect = score_.get_rect(center=(200 / 2, 370))
 
     DISPLAYSURF.blit(score_, score_rect)
@@ -120,19 +120,19 @@ def instructionsBlit():
     pg.draw.rect(DISPLAYSURF, (255,255,255), ar_rect.inflate(3,3))
     DISPLAYSURF.blit(arrow_r, ar_rect)
 
-    au_text = navodilaf.render('OBRAT', True, (255, 255, 255))
+    au_text = navodilaf.render('TURN', True, (255, 255, 255))
     au_rect = au_text.get_rect(center=(200 / 2+40, 100+shift_y*1))
     DISPLAYSURF.blit(au_text, au_rect)
 
-    ad_text = navodilaf.render('POSPEŠI PADANJE', True, (255, 255, 255))
+    ad_text = navodilaf.render('FASTER DESCENT', True, (255, 255, 255))
     ad_rect = ad_text.get_rect(center=(200 / 2+40, 100+shift_y*2))
     DISPLAYSURF.blit(ad_text, ad_rect)
 
-    al_text = navodilaf.render('PREMIK LEVO', True, (255, 255, 255))
+    al_text = navodilaf.render('MOVE LEFT', True, (255, 255, 255))
     al_rect = al_text.get_rect(center=(200 / 2+40, 100+shift_y*3))
     DISPLAYSURF.blit(al_text, al_rect)
 
-    ar_text = navodilaf.render('PREMIK DESNO', True, (255, 255, 255))
+    ar_text = navodilaf.render('MOVE RIGHT', True, (255, 255, 255))
     ar_rect = ar_text.get_rect(center=(200 / 2+40, 100+shift_y*4))
     DISPLAYSURF.blit(ar_text, ar_rect)
 
